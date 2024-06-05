@@ -1,0 +1,19 @@
+version: '3.4'
+
+services:
+  postgres:
+    image: postgres:15
+    container_name: links-postgres
+    environment:
+      - POSTGRES_USER=${POSTGRES_USER}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+      - POSTGRES_DB=${POSTGRES_DB}
+    ports:
+      - ${POSTGRES_PORT}:5432
+    hostname: ${POSTGRES_HOSTNAME}
+    restart: always
+    healthcheck:
+      test: pg_isready -U postgres -d test
+      interval: 10s
+      timeout: 10s
+      retries: 20
